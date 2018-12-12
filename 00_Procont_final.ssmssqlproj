@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="00_Procont_final">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="KRSPISQL:OFFICE\alekseenko.vvl">
+          <Created>2018-05-14T17:03:12.8240117+03:00</Created>
+          <Type>SQL</Type>
+          <Server>KRSPISQL</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName />
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="00_sp_DataToArchive.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>00_sp_DataToArchive.sql</FullPath>
+        </FileNode>
+        <FileNode Name="01_sp_ArchiveToBackup.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>01_sp_ArchiveToBackup.sql</FullPath>
+        </FileNode>
+        <FileNode Name="02_sp_Tambur_2Sigma.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>02_sp_Tambur_2Sigma.sql</FullPath>
+        </FileNode>
+        <FileNode Name="03_sp_bdm7_pasta.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>03_sp_bdm7_pasta.sql</FullPath>
+        </FileNode>
+        <FileNode Name="04_sp_BDM7_Archive_manual.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>04_sp_BDM7_Archive_manual.sql</FullPath>
+        </FileNode>
+        <FileNode Name="05_sp_Tumbur_info.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>05_sp_Tumbur_info.sql</FullPath>
+        </FileNode>
+        <FileNode Name="051_sp_Tumbur_info_Merge.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>051_sp_Tumbur_info_Merge.sql</FullPath>
+        </FileNode>
+        <FileNode Name="06_sp_semafor.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>06_sp_semafor.sql</FullPath>
+        </FileNode>
+        <FileNode Name="07_sp_semafor_delay.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>07_sp_semafor_delay.sql</FullPath>
+        </FileNode>
+        <FileNode Name="99_Tambur_info_temp.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:KRSPISQL:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>KRSPISQL</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>99_Tambur_info_temp.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>
