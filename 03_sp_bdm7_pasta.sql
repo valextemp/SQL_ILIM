@@ -1,5 +1,5 @@
 
--- !!! 14/05/2018 Самый окончательный вариант работать будет из БД Procont
+-- !!! 14/05/2018 вЂ”Р°РјС‹Р№ РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅС‹Р№ РІР°СЂРёР°РЅС‚ СЂР°Р±РѕС‚Р°С‚СЊ Р±СѓРґРµС‚ РёР· Р…Ж’ Procont
 
 use [Procont]
 IF OBJECT_ID ( 'Procont.dbo.sp_bdm7_pasta', 'P' ) IS NOT NULL   
@@ -47,16 +47,16 @@ CREATE TABLE #BDM7_Pasta
 			[StoredInOracle] [int] NOT NULL  DEFAULT (0)
 		)
 
-Declare @DateToWrite DateTime = GETDATE() -- Параметр для моей табл время записи в табл
+Declare @DateToWrite DateTime = GETDATE() -- С•Р°СЂР°РјРµС‚СЂ РґР»В¤ РјРѕРµР№ С‚Р°Р±Р» РІСЂРµРјВ¤ Р·Р°РїРёСЃРё РІ С‚Р°Р±Р»
 Declare @DateToWriteStr NVARCHAR(50) = CONVERT(NVARCHAR,@DateToWrite, 121) 
-Declare @TimeStartMax as DateTime -- События записываем по старту события
+Declare @TimeStartMax as DateTime -- вЂ”РѕР±С‹С‚РёВ¤ Р·Р°РїРёСЃС‹РІР°РµРј РїРѕ СЃС‚Р°СЂС‚Сѓ СЃРѕР±С‹С‚РёВ¤
 Declare @StartTimeMax NVARCHAR(50)
 DECLARE @sql_str nvarchar(max)
 Declare @sql_str1 nvarchar(max)
 Declare @sql_str_final nvarchar(max)
 
--- Set @TimeEndMax=Null -- Отладочный вариант
-Set @TimeStartMax=(select MAX([DateTime]) from [Procont].[dbo].[BDM7_Pasta]) -- добовляю 4 милисекунды
+-- Set @TimeEndMax=Null -- СњС‚Р»Р°РґРѕС‡РЅС‹Р№ РІР°СЂРёР°РЅС‚
+Set @TimeStartMax=(select MAX([DateTime]) from [Procont].[dbo].[BDM7_Pasta]) -- РґРѕР±РѕРІР»В¤СЋ 4 РјРёР»РёСЃРµРєСѓРЅРґС‹
 Set @StartTimeMax=CONVERT(NVARCHAR,ISNULL(@TimeStartMax,DATEADD(hour,-24,getdate())), 121)
 
 Set @sql_str=N'SELECT 
@@ -93,8 +93,8 @@ Set @sql_str=N'SELECT
 			,ts.[Gl_Mat] [Gl_Mat]
 			,ts.[Process] [Process]             FROM [AF].[EventFrame].[EventFrame] ef
              INNER JOIN [AF].[EventFrame].[EventFrameTemplate] eft ON ef.EventFrameTemplateID = eft.ID
-             INNER JOIN [AF].[DataT].[ft_TransposeEventFrameSnapshot_Паста] ts ON ts.EventFrameID = ef.ID
-             WHERE eft.Name = N''Паста'' and starttime >'''+ @StartTimeMax +'''
+             INNER JOIN [AF].[DataT].[ft_TransposeEventFrameSnapshot_С•Р°СЃС‚Р°] ts ON ts.EventFrameID = ef.ID
+             WHERE eft.Name = N''С•Р°СЃС‚Р°'' and starttime >'''+ @StartTimeMax +'''
              OPTION (FORCE ORDER, IGNORE ERRORS, EMBED ERRORS)'
 
 --==================================================================================
@@ -172,7 +172,7 @@ SELECT
 
 EXEC (@sql_str_final)
 
--- Добавление в основную таблицу Procont
+-- Ж’РѕР±Р°РІР»РµРЅРёРµ РІ РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ Procont
 INSERT INTO [Procont].[dbo].[BDM7_Pasta]
            (
 		    [ID]
@@ -212,7 +212,7 @@ INSERT INTO [Procont].[dbo].[BDM7_Pasta]
 		   	)
     SELECT 
 			[ID]
-			, Cast(CONVERT(NVARCHAR,DATEADD(hour,0, DATEADD(second, 1, [DateTime])), 120) as datetime) [DateTime] -- доб 1 сек и отсекаю милисек
+			, Cast(CONVERT(NVARCHAR,DATEADD(hour,0, DATEADD(second, 1, [DateTime])), 120) as datetime) [DateTime] -- РґРѕР± 1 СЃРµРє Рё РѕС‚СЃРµРєР°СЋ РјРёР»РёСЃРµРє
 			,[2003G_001R_1]
 			,[2003G_001R_2]
 			,[2003G_001R_3]

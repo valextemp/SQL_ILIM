@@ -1,5 +1,5 @@
 
--- !!! 14/05/2018 Самый окончательный вариант работать будет из БД Procont
+-- !!! 14/05/2018 РЎР°РјС‹Р№ РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅС‹Р№ РІР°СЂРёР°РЅС‚ СЂР°Р±РѕС‚Р°С‚СЊ Р±СѓРґРµС‚ РёР· Р‘Р” Procont
 
 --============================================================================
 use [Procont]
@@ -10,7 +10,7 @@ CREATE PROCEDURE dbo.sp_Tambur_2Sigma
 
 AS  
 BEGIN 
-Declare @DateToWrite DateTime = GETDATE() -- Параметр для моей табл время записи в табл
+Declare @DateToWrite DateTime = GETDATE() -- РџР°СЂР°РјРµС‚СЂ РґР»СЏ РјРѕРµР№ С‚Р°Р±Р» РІСЂРµРјСЏ Р·Р°РїРёСЃРё РІ С‚Р°Р±Р»
 Declare @DateToWriteStr NVARCHAR(50) = CONVERT(NVARCHAR,@DateToWrite, 121) 
 Declare @TimeEndMax as DateTime
 Declare @EndTimeMax NVARCHAR(50)
@@ -18,7 +18,7 @@ DECLARE @sql_str nvarchar(max)
 Declare @sql_str1 nvarchar(max)
 Declare @sql_str_final nvarchar(max)
 
-Set @TimeEndMax=DATEADD(millisecond,4,(select MAX(Time_End) from [Procont].[dbo].[Tambur_2Sigma])) -- добовляю 4 милисекунды
+Set @TimeEndMax=DATEADD(millisecond,4,(select MAX(Time_End) from [Procont].[dbo].[Tambur_2Sigma])) -- РґРѕР±РѕРІР»СЏСЋ 4 РјРёР»РёСЃРµРєСѓРЅРґС‹
 Set @EndTimeMax=CONVERT(NVARCHAR,ISNULL(@TimeEndMax,DATEADD(hour,-24,getdate())), 121)
 
 CREATE TABLE #Tambur_2Sigma(
@@ -53,12 +53,12 @@ Set @sql_str=
 		(
 			SELECT ID
 			FROM [AF].[EventFrame].[EventFrameTemplate]
-			WHERE Name = N''Тамбур_БДМ 7_Сигма'' and EndTime IS NOT NULL and EndTime >'''+ @EndTimeMax +'''
+			WHERE Name = N''РўР°РјР±СѓСЂ_Р‘Р”Рњ 7_РЎРёРіРјР°'' and EndTime IS NOT NULL and EndTime >'''+ @EndTimeMax +'''
 		)
 	) ef
 	INNER JOIN [AF].[EventFrame].[EventFrameHierarchy] efh
 		ON efh.ID = ef.ID
-	INNER JOIN [AF].[DataT].[ft_TransposeEventFrameSnapshot_Тамбур_БДМ 7_Сигма] ts
+	INNER JOIN [AF].[DataT].[ft_TransposeEventFrameSnapshot_РўР°РјР±СѓСЂ_Р‘Р”Рњ 7_РЎРёРіРјР°] ts
 		ON ts.EventFrameID = ef.ID
 	OPTION (FORCE ORDER, IGNORE ERRORS, EMBED ERRORS)'
 
@@ -84,7 +84,7 @@ Set @sql_str_final = N'
 
 EXEC (@sql_str_final)
 
--- Запись в основную таблицу Procont Tambur_2Sigma
+-- Р—Р°РїРёСЃСЊ РІ РѕСЃРЅРѕРІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ Procont Tambur_2Sigma
 INSERT INTO [Procont].[dbo].[Tambur_2Sigma] (
 	 	[S1], 	[S10], 	[S11], 	[S12], 	[S13], 	[S14], 	[S15], 	[S16], 	[S17], 	[S18], 	[S19], 	[S2] 
 	,[S20], 	[S21], 	[S22], 	[S23], 	[S24], 	[S25], 	[S26], 	[S27], 	[S28], 	[S29], 	[S3] 	

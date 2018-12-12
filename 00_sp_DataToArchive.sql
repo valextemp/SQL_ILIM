@@ -1,11 +1,11 @@
---!!! Окончательный вариант на 05/04/2018 считываем значения из PI на 3 минуты раньше окончания часа и записываем метку времени на начало часа 
--- напр ХП вызываем в 16:00, округляем до 16:00:00(без секунд и минут), затем отнимаем 3 минуты, считываем значения из PI на 15:57:00
--- и записываем их в Проконт с меткой времени 15:00:00
--- 07/05/2018 добавлена запись непосредственно в их Procont
--- !!! 14/05/2018 Самый окончательный вариант работать будет из БД Procont
+--!!! РћРєРѕРЅС‡Р°С‚РµР»СЊРЅС‹Р№ РІР°СЂРёР°РЅС‚ РЅР° 05/04/2018 СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РёР· PI РЅР° 3 РјРёРЅСѓС‚С‹ СЂР°РЅСЊС€Рµ РѕРєРѕРЅС‡Р°РЅРёСЏ С‡Р°СЃР° Рё Р·Р°РїРёСЃС‹РІР°РµРј РјРµС‚РєСѓ РІСЂРµРјРµРЅРё РЅР° РЅР°С‡Р°Р»Рѕ С‡Р°СЃР° 
+-- РЅР°РїСЂ РҐРџ РІС‹Р·С‹РІР°РµРј РІ 16:00, РѕРєСЂСѓРіР»СЏРµРј РґРѕ 16:00:00(Р±РµР· СЃРµРєСѓРЅРґ Рё РјРёРЅСѓС‚), Р·Р°С‚РµРј РѕС‚РЅРёРјР°РµРј 3 РјРёРЅСѓС‚С‹, СЃС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РёР· PI РЅР° 15:57:00
+-- Рё Р·Р°РїРёСЃС‹РІР°РµРј РёС… РІ РџСЂРѕРєРѕРЅС‚ СЃ РјРµС‚РєРѕР№ РІСЂРµРјРµРЅРё 15:00:00
+-- 07/05/2018 РґРѕР±Р°РІР»РµРЅР° Р·Р°РїРёСЃСЊ РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РІ РёС… Procont
+-- !!! 14/05/2018 РЎР°РјС‹Р№ РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅС‹Р№ РІР°СЂРёР°РЅС‚ СЂР°Р±РѕС‚Р°С‚СЊ Р±СѓРґРµС‚ РёР· Р‘Р” Procont
 
 
--- версия с запросом по метке   времени минус 3 минуты для PV и ровно в час для TimeRangeMethod=Average
+-- РІРµСЂСЃРёСЏ СЃ Р·Р°РїСЂРѕСЃРѕРј РїРѕ РјРµС‚РєРµ   РІСЂРµРјРµРЅРё РјРёРЅСѓСЃ 3 РјРёРЅСѓС‚С‹ РґР»СЏ PV Рё СЂРѕРІРЅРѕ РІ С‡Р°СЃ РґР»СЏ TimeRangeMethod=Average
 
 use [Procont]
 IF OBJECT_ID ( 'Procont.dbo.sp_DataToArchive', 'P' ) IS NOT NULL   
@@ -18,19 +18,19 @@ Create PROCEDURE sp_DataToArchive
 AS
 BEGIN
 
-Declare @FlagWork int=1 -- Флаг для проверки что процедуру функцию можно запускать 1 запускаем, 0 выходим
+Declare @FlagWork int=1 -- Р¤Р»Р°Рі РґР»СЏ РїСЂРѕРІРµСЂРєРё С‡С‚Рѕ РїСЂРѕС†РµРґСѓСЂСѓ С„СѓРЅРєС†РёСЋ РјРѕР¶РЅРѕ Р·Р°РїСѓСЃРєР°С‚СЊ 1 Р·Р°РїСѓСЃРєР°РµРј, 0 РІС‹С…РѕРґРёРј
 
 declare @dt datetime
-declare @dt_round datetime -- время округленное до часов (без секунд и без минут)
-declare @dt_roundstr nvarchar(20) -- время округленное до часов
+declare @dt_round datetime -- РІСЂРµРјСЏ РѕРєСЂСѓРіР»РµРЅРЅРѕРµ РґРѕ С‡Р°СЃРѕРІ (Р±РµР· СЃРµРєСѓРЅРґ Рё Р±РµР· РјРёРЅСѓС‚)
+declare @dt_roundstr nvarchar(20) -- РІСЂРµРјСЏ РѕРєСЂСѓРіР»РµРЅРЅРѕРµ РґРѕ С‡Р°СЃРѕРІ
 declare @dtminus3min datetime
 declare @dtminus3minstr nvarchar(20)
-declare @dtminus1hour datetime -- Для записи в метки времени в проконт минус 1 час
+declare @dtminus1hour datetime -- Р”Р»СЏ Р·Р°РїРёСЃРё РІ РјРµС‚РєРё РІСЂРµРјРµРЅРё РІ РїСЂРѕРєРѕРЅС‚ РјРёРЅСѓСЃ 1 С‡Р°СЃ
 declare @dtminus1hourstr nvarchar(20)
 
 Set @dt=GETDATE()
-Set @dt_round=dateadd(hour, datediff(hour, 0, @dt), 0) -- Усекаю до часов не округляя
-Set @dtminus3min=dateadd(MINUTE,-3, @dt_round)  -- Отнимаем 3 минуты
+Set @dt_round=dateadd(hour, datediff(hour, 0, @dt), 0) -- РЈСЃРµРєР°СЋ РґРѕ С‡Р°СЃРѕРІ РЅРµ РѕРєСЂСѓРіР»СЏСЏ
+Set @dtminus3min=dateadd(MINUTE,-3, @dt_round)  -- РћС‚РЅРёРјР°РµРј 3 РјРёРЅСѓС‚С‹
 Set @dtminus1hour=dateadd(hour, datediff(hour, 0, @dtminus3min), 0)
 
 
@@ -46,9 +46,9 @@ Declare @sql_str_final nvarchar(max)
 
 
  --=================================================================
- -- Определяем имя таблицы и имя элемента в PI AF
-Declare @TableName nvarchar(30)-- имя таблицы в которую пишем
-Declare @PIelement nvarchar(5)-- имя элемнта в PI AF
+ -- РћРїСЂРµРґРµР»СЏРµРј РёРјСЏ С‚Р°Р±Р»РёС†С‹ Рё РёРјСЏ СЌР»РµРјРµРЅС‚Р° РІ PI AF
+Declare @TableName nvarchar(30)-- РёРјСЏ С‚Р°Р±Р»РёС†С‹ РІ РєРѕС‚РѕСЂСѓСЋ РїРёС€РµРј
+Declare @PIelement nvarchar(5)-- РёРјСЏ СЌР»РµРјРЅС‚Р° РІ PI AF
 
 
 Set @PIelement=''
@@ -95,11 +95,11 @@ If UPPER(@NameArchive)='BDM7'
 if @PIelement=''
 	Set @FlagWork=0
 --================================================================
--- Проверка на правильность входных параметров процедуры функции
+-- РџСЂРѕРІРµСЂРєР° РЅР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ РІС…РѕРґРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ РїСЂРѕС†РµРґСѓСЂС‹ С„СѓРЅРєС†РёРё
 
 IF @FlagWork=0
     BEGIN  
-        PRINT N'Error 1. Неправильные входные данные'
+        PRINT N'Error 1. РќРµРїСЂР°РІРёР»СЊРЅС‹Рµ РІС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ'
         RETURN  
     END  
 --=================================================================
@@ -138,7 +138,7 @@ Set @sql_str=N'SELECT
 		INNER JOIN [AF].[Asset].[ElementAttribute] ea ON ea.ElementID = eh.ElementID
 		LEFT JOIN [System].[UnitOfMeasure].[UOM] uom ON ea.DefaultUOMID=uom.ID,
 		[AF].[Data].[ft_InterpolateDiscrete] i
-		WHERE eh.Path = N''\Прикладные задачи\Передача данных в Проконт\'' AND eh.Name='''+@PIelement+'''
+		WHERE eh.Path = N''\РџСЂРёРєР»Р°РґРЅС‹Рµ Р·Р°РґР°С‡Рё\РџРµСЂРµРґР°С‡Р° РґР°РЅРЅС‹С… РІ РџСЂРѕРєРѕРЅС‚\'' AND eh.Name='''+@PIelement+'''
 			AND i.ElementAttributeID = ea.ID -- first InterpolateDiscrete TVF argument
 			AND ea.ConfigString NOT Like''%TimeRangeMethod=Average%''
 			AND ea.Name NOT Like ''%input''
@@ -182,7 +182,7 @@ Set @sql_str=N'SELECT
 		INNER JOIN [AF].[Asset].[ElementAttribute] ea ON ea.ElementID = eh.ElementID
 		LEFT JOIN [System].[UnitOfMeasure].[UOM] uom ON ea.DefaultUOMID=uom.ID,
 		[AF].[Data].[ft_InterpolateDiscrete] i
-		WHERE eh.Path = N''\Прикладные задачи\Передача данных в Проконт\'' AND eh.Name='''+@PIelement+'''
+		WHERE eh.Path = N''\РџСЂРёРєР»Р°РґРЅС‹Рµ Р·Р°РґР°С‡Рё\РџРµСЂРµРґР°С‡Р° РґР°РЅРЅС‹С… РІ РџСЂРѕРєРѕРЅС‚\'' AND eh.Name='''+@PIelement+'''
 			AND i.ElementAttributeID = ea.ID -- first InterpolateDiscrete TVF argument
 			AND ea.ConfigString Like''%TimeRangeMethod=Average%''
 			AND ea.Name NOT Like ''%input''
